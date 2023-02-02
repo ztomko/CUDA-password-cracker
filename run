@@ -1,0 +1,1 @@
+nvcc -arch=sm_35 -rdc=true password_cracker.cu -o password_cracker -lcudadevrt
