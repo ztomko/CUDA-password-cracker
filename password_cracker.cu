@@ -7,8 +7,10 @@
 #define FIRST 33
 #define SPREAD 4
 
+//Holds the password in constant memory
 __constant__ char password[MAX_SIZE];
 
+//Checks the tested password against the actual password
 __device__ bool checkWord(char* guessword, int length){
   bool checkMatch = true;
   for(int i = 0; i <= length + 1; i++){
@@ -20,6 +22,7 @@ __device__ bool checkWord(char* guessword, int length){
   return checkMatch;
 }
 
+//Creates a password based on the blockId
 __device__ void wordStarter(char* guessword, int length){
   guessword[0] = FIRST + threadIdx.x;
   if(length > 4) length = 4;
@@ -31,6 +34,7 @@ __device__ void wordStarter(char* guessword, int length){
   }
 }
 
+//Main kernel function; searches for a suitable password
 __global__ void startCrackin(char* testword){
   int length = 0;
   if(blockIdx.y > 0){
@@ -56,6 +60,7 @@ __global__ void startCrackin(char* testword){
   }
 }
 
+//Main function; runs password cracker and timer to determine speed
 int main(void){
   char* testword;
   char* hostPassword;
